@@ -811,7 +811,6 @@ function processRequest(req, res, next) {
         // Basic Auth support
         if (apiConfig.auth == 'basicAuth') {
             options.headers['Authorization'] = 'Basic ' + new Buffer(reqQuery.apiUsername + ':' + reqQuery.apiPassword).toString('base64');
-            console.log(options.headers['Authorization'] );
         }
         
         // Perform signature routine, if any.
