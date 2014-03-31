@@ -783,6 +783,11 @@ function processRequest(req, res, next) {
             options.path += apiConfig.keyParam + '=' + apiKey;
         }
 
+        // Basic Auth support
+        if (apiConfig.auth == 'basicAuth') {
+            options.headers['Authorization'] = 'Basic ' + new Buffer(reqQuery.apiUsername + ':' + reqQuery.apiPassword).toString('base64');
+        }
+        
         // Perform signature routine, if any.
         if (apiConfig.signature) {
             var timeStamp, sig;
