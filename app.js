@@ -566,6 +566,7 @@ function processRequest(req, res, next) {
         privateReqURL = apiConfig.protocol + '://' + apiConfig.baseURL + apiConfig.privatePath + methodURL + ((paramString.length > 0) ? '?' + paramString : ""),
         options = {
             headers: clone(apiConfig.headers),
+            rejectUnauthorized: false,
             protocol: apiConfig.protocol + ':',
             host: baseHostUrl,
             port: baseHostPort,
@@ -810,6 +811,7 @@ function processRequest(req, res, next) {
         // Basic Auth support
         if (apiConfig.auth == 'basicAuth') {
             options.headers['Authorization'] = 'Basic ' + new Buffer(reqQuery.apiUsername + ':' + reqQuery.apiPassword).toString('base64');
+            console.log(options.headers['Authorization'] );
         }
         
         // Perform signature routine, if any.
