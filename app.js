@@ -56,7 +56,7 @@ if (argv.help) {
 // Configuration
 var configFilePath = path.resolve(argv['config-file']);
 try {
-    var config = require(configFilePath);
+    var config = require('./config.json');
 } catch(e) {
     console.error("File " + configFilePath + " not found or is invalid.  Try: `cp config.json.sample config.json`");
     process.exit(1);
@@ -565,8 +565,8 @@ function processRequest(req, res, next) {
     var paramString = query.stringify(params),
         privateReqURL = apiConfig.protocol + '://' + apiConfig.baseURL + apiConfig.privatePath + methodURL + ((paramString.length > 0) ? '?' + paramString : ""),
         options = {
-            headers: clone(apiConfig.headers),
             rejectUnauthorized: false,
+	    headers: headers,
             protocol: apiConfig.protocol + ':',
             host: baseHostUrl,
             port: baseHostPort,
@@ -811,6 +811,7 @@ function processRequest(req, res, next) {
         // Basic Auth support
         if (apiConfig.auth == 'basicAuth') {
             options.headers['Authorization'] = 'Basic ' + new Buffer(reqQuery.apiUsername + ':' + reqQuery.apiPassword).toString('base64');
+            console.log(options.headers['Authorization'] );
         }
         
         // Perform signature routine, if any.
