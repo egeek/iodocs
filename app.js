@@ -566,7 +566,7 @@ function processRequest(req, res, next) {
         privateReqURL = apiConfig.protocol + '://' + apiConfig.baseURL + apiConfig.privatePath + methodURL + ((paramString.length > 0) ? '?' + paramString : ""),
         options = {
             rejectUnauthorized: false,
-	    headers: headers,
+	    headers: clone(apiConfig.headers),
             protocol: apiConfig.protocol + ':',
             host: baseHostUrl,
             port: baseHostPort,
